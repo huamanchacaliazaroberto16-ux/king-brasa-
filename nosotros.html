@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="icon" href="imagenes/logo-kingbrasa.png">
+  <meta charset="UTF-8">
+  <title>Nosotros - King Brasa</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-image: url("imagenes/bg.png");
+      background-size: cover;
+      background-attachment: fixed;
+      color: #fff;
+    }
+
+    header {
+      background-color: rgba(255, 102, 0, 0.9);
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .btn {
+      background: #fff3e0;
+      color: #993e01;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 20px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #ff9800;
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 60px auto;
+      padding: 0 30px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 3em;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+      margin-bottom: 30px;
+      animation: fadeIn 0.8s ease forwards;
+    }
+
+    .content {
+      background-color: rgba(255, 102, 0, 0.8);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      backdrop-filter: blur(4px);
+      animation: fadeIn 1s ease;
+    }
+
+    .content p {
+      font-size: 1.2em;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .equipo {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 25px;
+      margin-top: 30px;
+    }
+
+    .miembro {
+      background-color: rgba(255, 102, 0, 0.85);
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeIn 0.8s ease forwards;
+    }
+
+    .miembro:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+    }
+
+    .miembro img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 15px;
+      border: 3px solid #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .miembro h3 {
+      margin: 0 0 8px 0;
+      font-size: 1.4em;
+      color: #fff8f0;
+    }
+
+    .miembro p {
+      margin: 0;
+      font-size: 1em;
+      color: #ffeaa7;
+      font-weight: 600;
+    }
+
+    .miembro .icon {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: #fff3e0;
+    }
+
+    .mapa-section {
+      margin-top: 50px;
+      background-color: rgba(255, 102, 0, 0.8);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      backdrop-filter: blur(4px);
+      animation: fadeIn 1s ease;
+    }
+
+    .mapa-section h2 {
+      text-align: center;
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: #fff8f0;
+    }
+
+    .mapa-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .mapa-container iframe {
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+      max-width: 100%;
+    }
+
+    .info-contacto {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 1.2em;
+      line-height: 2;
+    }
+
+    .info-contacto i {
+      color: #ffeaa7;
+      margin-right: 8px;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ENCABEZADO -->
+  <header>
+    <h2>King Brasa</h2>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Menú">
+      <i class="fas fa-bars"></i>
+    </button>
+    <nav class="nav-buttons" id="navMenu">
+      <a href="menu principal.html"><i class="fas fa-home"></i> Inicio</a>
+      <a href="Cmenu.html"><i class="fas fa-utensils"></i> Carta</a>
+      <a href="nosotros.html"><i class="fas fa-users"></i> Nosotros</a>
+      
+      <span id="adminBtnContainer"></span>
+      <span id="userBtns"></span>
+    </nav>
+  </header>
+
+  <!-- CONTENIDO -->
+  <main>
+    <h1>🍗 Sobre Nosotros</h1>
+
+    <div class="content">
+      <p>
+        En <strong>King Brasa</strong> nos dedicamos a ofrecer los mejores pollos a la brasa de Ica, 
+        preparados con recetas tradicionales y el mejor sazón casero. Cada pollo es marinado con especias 
+        naturales y cocido a la perfección en nuestros hornos a leña.
+      </p>
+
+      <p>
+        Somos un equipo apasionado por la gastronomía peruana, comprometidos con la calidad, el sabor 
+        y la satisfacción de nuestros clientes. Desde el 2024, hemos llevado alegría y buen sabor a 
+        cientos de familias iqueñas.
+      </p>
+
+      <p>
+        Nuestro servicio de delivery garantiza que tu pollo llegue caliente, jugoso y en el menor tiempo 
+        posible. <strong>¡Porque en King Brasa, tu satisfacción es nuestra prioridad!</strong>
+      </p>
+
+      <h2 style="margin-top: 50px; margin-bottom: 20px; text-align: center; font-size: 2.2em;">
+        👥 Nuestro Equipo
+      </h2>
+
+      <div class="equipo">
+        <!-- Alejandra - Creadora -->
+        <div class="miembro">
+          <div class="icon">
+            <i class="fas fa-laptop-code"></i>
+          </div>
+          <img src="imagenes/gerente.jpg" alt="Alejandra" 
+               onerror="this.src='https://ui-avatars.com/api/?name=Alejandra&background=ff6600&color=fff&size=120'">
+          <h3>Alejandra</h3>
+          <p>💻 Creadora de la Página Web</p>
+        </div>
+
+        <!-- Roberto - Creador -->
+        <div class="miembro">
+          <div class="icon">
+            <i class="fas fa-code"></i>
+          </div>
+          <img src="imagenes/sommelier.jpg" alt="Roberto"
+               onerror="this.src='https://ui-avatars.com/api/?name=Roberto&background=ff6600&color=fff&size=120'">
+          <h3>Roberto</h3>
+          <p>🚀 Creador de la Página Web</p>
+        </div>
+
+        <!-- Francisco - Creador -->
+        <div class="miembro">
+          <div class="icon">
+            <i class="fas fa-palette"></i>
+          </div>
+          <img src="imagenes/chef1.jpg" alt="Francisco"
+               onerror="this.src='https://ui-avatars.com/api/?name=Francisco&background=ff6600&color=fff&size=120'">
+          <h3>Francisco</h3>
+          <p>🎨 Creador de la Página Web</p>
+        </div>
+
+        <!-- Javier - Administrador -->
+        <div class="miembro">
+          <div class="icon">
+            <i class="fas fa-user-tie"></i>
+          </div>
+          <img src="imagenes/atencion.jpg" alt="Javier"
+               onerror="this.src='https://ui-avatars.com/api/?name=Javier&background=ff6600&color=fff&size=120'">
+          <h3>Javier</h3>
+          <p>👨‍💼 Administrador del Restaurante</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección de Contacto -->
+    <div class="mapa-section">
+      <h2>📞 Contáctanos</h2>
+      
+      <div class="info-contacto">
+        <p>
+          <i class="fas fa-phone"></i>
+          <strong>Teléfono:</strong> +51 920 047 836
+        </p>
+        <p>
+          <i class="fas fa-envelope"></i>
+          <strong>Email:</strong> contacto@kingbrasa.pe
+        </p>
+        <p>
+          <i class="fas fa-clock"></i>
+          <strong>Horario de Atención:</strong> Lunes a Domingo 11:00 AM - 11:00 PM
+        </p>
+      </div>
+
+      <p style="text-align: center; margin-top: 30px; font-size: 1.3em; color: #fff8f0; background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px;">
+        <i class="fas fa-motorcycle" style="font-size: 2em; display: block; margin-bottom: 10px;"></i>
+        <strong>🍗 King Brasa es un servicio de delivery únicamente.</strong><br>
+        No contamos con local físico para visitas.<br>
+        <em>¡Hacemos llegar nuestro delicioso pollo hasta tu puerta!</em>
+      </p>
+    </div>
+
+  </main>
+
+  <!-- Modal Login / Registro -->
+  <div id="modalLogin" class="modal"
+       onclick="event.target===this && this.classList.remove('open')">
+    <div class="modal-content">
+      <h2>Ingresa a tu cuenta</h2>
+      <form onsubmit="event.preventDefault(); login(this.email.value,this.pass.value)">
+        <input name="email" placeholder="Correo" required>
+        <input name="pass" type="password" placeholder="Contraseña" required>
+        <button class="btn" style="width:100%">Acceder</button>
+      </form>
+
+      <hr style="margin:1.3rem 0">
+
+      <h3>Crear cuenta</h3>
+      <form onsubmit="event.preventDefault(); signUp(this.name.value,this.email2.value,this.pass2.value)">
+        <input name="name" placeholder="Nombre" required>
+        <input name="email2" type="email" placeholder="Correo" required>
+        <input name="pass2" type="password" placeholder="Contraseña" required>
+        <button class="btn outline" style="width:100%">Registrarme</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = JSON.parse(localStorage.getItem('cepasSession') || 'null');
+
+      const adminContainer = document.getElementById('adminBtnContainer');
+      const userBtnsContainer = document.getElementById('userBtns');
+
+      // Si el usuario es admin, muestra el botón Admin
+      if (user?.admin && adminContainer) {
+        const adminBtn = document.createElement('a');
+        adminBtn.href = 'admin.html';
+        adminBtn.innerHTML = `<i class="fas fa-user-shield"></i> Admin`;
+        adminContainer.appendChild(adminBtn);
+      }
+
+      // Si el usuario ha iniciado sesión, muestra "Cerrar sesión"
+      if (user && userBtnsContainer) {
+        const logoutBtn = document.createElement('button');
+        logoutBtn.className = 'btn outline';
+        logoutBtn.innerHTML = `<i class="fas fa-sign-out-alt"></i> Cerrar sesión`;
+        logoutBtn.onclick = logout;
+        userBtnsContainer.appendChild(logoutBtn);
+      }
+
+      // Si el usuario NO ha iniciado sesión, muestra "Ingresar / Registrarse"
+      if (!user && userBtnsContainer) {
+        const loginBtn = document.createElement('button');
+        loginBtn.className = 'btn outline';
+        loginBtn.innerHTML = `<i class="fas fa-user"></i> Ingresar / Registrarse`;
+        loginBtn.onclick = () => {
+          document.getElementById('modalLogin')?.classList.add('open');
+        };
+        userBtnsContainer.appendChild(loginBtn);
+      }
+    });
+
+    function logout() {
+      localStorage.removeItem('cepasSession');
+      location.reload();
+    }
+  </script>
+
+</body>
+</html>

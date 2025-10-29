@@ -1,0 +1,22 @@
+{
+  "opiniones": [
+    {
+      "id": 1,
+      "nombre": "María López",
+      "texto": "¡La mejor experiencia culinaria en Ica! El servicio y el ambiente son insuperables.",
+      "estrellas": 5
+    },
+    {
+      "id": 2,
+      "nombre": "Juan Pérez",
+      "texto": "La comida es deliciosa y el personal muy atento. ¡Volveré pronto!",
+      "estrellas": 5
+    },
+    {
+      "id": 3,
+      "nombre": "Ana Torres",
+      "texto": "Excelente calidad/precio y ambiente acogedor.",
+      "estrellas": 4
+    }
+  ]
+}

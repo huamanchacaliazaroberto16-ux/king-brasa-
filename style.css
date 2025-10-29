@@ -1,0 +1,603 @@
+/* ===== King Brasa – Estilos globales (ROJO ELEGANTE + DORADO) ===== */
+:root{
+  --rojo-principal: #C41E3A;
+  --rojo-oscuro: #8B0000;
+  --rojo-hover: #A01729;
+  --dorado: #FFD700;
+  --dorado-suave: #FFC107;
+  --crema: #FFF8DC;
+  --negro-carbon: #1a1a1a;
+  --gris-oscuro: #2c2c2c;
+  --bg: #1a1a1a;
+  --card: #2c2c2c;
+  --text: #fff;
+  --radius: 12px;
+  --shadow: 0 4px 14px rgba(0,0,0,.4);
+  scroll-behavior: smooth;
+}
+
+*,
+*::before,
+*::after{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  font-family:'Segoe UI',Tahoma,Verdana,sans-serif;
+  background: var(--bg) url("imagenes/bg.png") center/cover fixed;
+  color: var(--text);
+}
+
+/* ---------- Navegación ---------- */
+header{
+  position:sticky;top:0;z-index:999;
+  background: rgba(196, 30, 58, 0.95); /* Rojo elegante con transparencia */
+  backdrop-filter:blur(6px);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.8rem 2rem;
+  transition:background .4s;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+header.scrolled{
+  background: rgba(139, 0, 0, 0.98); /* Rojo oscuro al hacer scroll */
+}
+
+header h2 {
+  color: var(--dorado);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  font-size: 1.8rem;
+}
+
+nav a{
+  color: var(--crema);
+  margin:0 .9rem;
+  text-decoration:none;
+  font-weight:600;
+  position:relative;
+  transition: color 0.3s;
+}
+
+nav a::after{
+  content:'';
+  position:absolute;
+  left:0;bottom:-4px;
+  height:2px;width:0;
+  background: var(--dorado);
+  transition:width .3s;
+}
+
+nav a:hover{
+  color: var(--dorado);
+}
+
+nav a:hover::after{width:100%}
+
+.btn{
+  background: var(--rojo-principal);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  padding: .55rem 1.4rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .3s, transform .2s;
+  box-shadow: 0 2px 8px rgba(196, 30, 58, 0.3);
+}
+
+.btn:hover{
+  background: var(--rojo-oscuro);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(139, 0, 0, 0.5);
+}
+
+.btn.outline{
+  background: transparent;
+  border: 2px solid var(--rojo-principal);
+  color: var(--rojo-principal);
+}
+
+.btn.outline:hover{
+  background: var(--rojo-principal);
+  color: white;
+}
+
+/* ---------- Secciones ---------- */
+section{padding:4rem 2rem}
+h1,h2{text-align:center}
+
+.fade-in{opacity:0;transform:translateY(20px);transition:.6s}
+.fade-in.loaded{opacity:1;transform:translateY(0)}
+
+/* ---------- Tarjetas menú ---------- */
+#menuWrap{
+  display:grid;gap:2rem;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+}
+
+.card{
+  background: var(--card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform .3s, box-shadow .3s;
+  border: 2px solid transparent;
+}
+
+.card:hover{
+  transform: translateY(-6px);
+  box-shadow: 0 8px 24px rgba(196, 30, 58, 0.4);
+  border-color: var(--rojo-principal);
+}
+
+.card img{width:100%;height:220px;object-fit:cover}
+.card .info{padding:1rem}
+
+.price{
+  color: var(--dorado);
+  font-weight: 700;
+  font-size: 1.3em;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+/* ---------- Formularios ---------- */
+form{max-width:600px;margin:auto}
+
+input, select, textarea{
+  width:100%;
+  padding:.65rem;
+  margin-bottom:1rem;
+  border: 2px solid var(--gris-oscuro);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--text);
+  transition: border-color 0.3s;
+}
+
+input:focus, select:focus, textarea:focus{
+  outline: none;
+  border-color: var(--rojo-principal);
+  box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.1);
+}
+
+textarea{resize:vertical;min-height:120px}
+
+/* ---------- Modal ---------- */
+.modal{
+  position:fixed;inset:0;background:rgba(0,0,0,.6);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;visibility:hidden;transition:.3s}
+
+.modal.open{opacity:1;visibility:visible}
+
+.modal-content{
+  background: var(--card);
+  padding: 2rem;
+  border-radius: var(--radius);
+  width: 90%;
+  max-width: 420px;
+  box-shadow: var(--shadow);
+  border: 2px solid var(--rojo-principal);
+}
+
+.modal-content h2, .modal-content h3{
+  color: var(--dorado);
+}
+
+/* ---------- Tablas (perfil/admin) ---------- */
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:1rem;
+  background: var(--card);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+th, td{
+  padding:.6rem;
+  border-bottom:1px solid var(--gris-oscuro);
+}
+
+th{
+  background: var(--rojo-principal);
+  color: white;
+  font-weight: 600;
+}
+
+tr:hover{
+  background: rgba(196, 30, 58, 0.1);
+}
+
+table td button {
+  background-color: var(--rojo-principal);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+table td button:hover {
+  background-color: var(--rojo-oscuro);
+}
+
+table td button i {
+  pointer-events: none;
+}
+
+/* ---------- Utilidad ---------- */
+.hide{display:none!important}
+
+.hamburger {
+  display: none;
+  font-size: 1.8rem;
+  background: none;
+  color: var(--dorado);
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.hamburger:hover{
+  transform: scale(1.1);
+}
+
+/* ---------- Hero Section ---------- */
+.hero {
+  text-align: center;
+  padding: 60px 20px;
+  background: linear-gradient(135deg, rgba(196, 30, 58, 0.85) 0%, rgba(139, 0, 0, 0.85) 100%);
+  backdrop-filter: blur(4px);
+  border-radius: 12px;
+  max-width: 1000px;
+  margin: 40px auto;
+  animation: fadeIn 1.2s ease;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+
+.hero h1 {
+  font-size: 3em;
+  margin-bottom: 10px;
+  color: var(--dorado);
+  text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+}
+
+/* ---------- Content Sections ---------- */
+.content {
+  background: linear-gradient(135deg, rgba(196, 30, 58, 0.8) 0%, rgba(139, 0, 0, 0.8) 100%);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+  animation: fadeIn 1s ease;
+  border: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+.content h2 {
+  color: var(--dorado);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+/* ---------- Horario de Atención ---------- */
+.horario-atencion {
+  background: linear-gradient(90deg, var(--rojo-principal) 60%, var(--crema) 100%);
+  color: var(--negro-carbon);
+  margin: 30px auto 0 auto;
+  padding: 24px 32px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(196, 30, 58, 0.3);
+  max-width: 500px;
+  text-align: center;
+  animation: fadeIn 1s;
+  border: 2px solid var(--dorado);
+}
+
+.horario-atencion h2 {
+  margin-top: 0;
+  font-size: 2em;
+  color: #fff;
+  text-shadow: 2px 2px 4px var(--rojo-oscuro);
+  margin-bottom: 16px;
+}
+
+.horario-atencion ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px 0;
+}
+
+.horario-atencion li {
+  font-size: 1.15em;
+  margin: 6px 0;
+  font-weight: 500;
+}
+
+.estado-horario .abierto {
+  background: #43a047;
+  color: #fff;
+  padding: 6px 18px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 1.1em;
+  box-shadow: 0 2px 8px rgba(67,160,71,0.3);
+  letter-spacing: 1px;
+  display: inline-block;
+  animation: pulse 1.5s infinite;
+}
+
+/* ---------- Equipo / Miembros ---------- */
+.equipo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.miembro {
+  background: linear-gradient(135deg, rgba(196, 30, 58, 0.85) 0%, rgba(139, 0, 0, 0.85) 100%);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeIn 0.8s ease forwards;
+  border: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+.miembro:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 20px rgba(196, 30, 58, 0.6);
+  border-color: var(--dorado);
+}
+
+.miembro h3 {
+  color: var(--dorado);
+}
+
+.miembro p {
+  color: var(--crema);
+}
+
+.miembro .icon {
+  color: var(--dorado);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+/* ---------- Gráficos ---------- */
+#graficoPedidos {
+  max-width: 400px;
+  max-height: 300px;
+  width: 100%;
+  height: auto;
+  margin: auto;
+  display: block;
+}
+
+/* ---------- Contacto ---------- */
+#contacto {
+  text-align: center;
+  margin-top: 60px;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(196, 30, 58, 0.85) 0%, rgba(139, 0, 0, 0.85) 100%);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  animation: fadeIn 1.2s ease;
+  border: 2px solid var(--dorado);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+
+  .nav-buttons {
+    display: none;
+    flex-direction: column;
+    gap: 0;
+    background: rgba(139, 0, 0, 0.98);
+    position: absolute;
+    top: 70px;
+    right: 20px;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,.5);
+    z-index: 1000;
+    border: 2px solid var(--dorado);
+  }
+
+  .nav-buttons.show {
+    display: flex;
+  }
+
+  .nav-buttons a {
+    margin: 0.5rem 0;
+  }
+
+  #adminBtnContainer,
+  #userBtns {
+    margin-top: 1rem;
+  }
+
+  #adminBtnContainer a,
+  #userBtns button{
+    margin-top: 0.5rem;
+  }
+}
+
+/* ---------- Animaciones ---------- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 #43a04788; }
+  70% { box-shadow: 0 0 12px 8px #43a04744; }
+  100% { box-shadow: 0 0 0 0 #43a04788; }
+}
+
+/* ---------- Navegación común ---------- */
+.nav-buttons{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.nav-buttons a,
+.nav-buttons button {
+  background: var(--crema);
+  color: var(--rojo-principal);
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.nav-buttons a:hover,
+.nav-buttons button:hover {
+  background-color: var(--dorado);
+  color: var(--rojo-oscuro);
+  transform: translateY(-2px);
+}
+
+/* ---------- Logo / Brand ---------- */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--dorado);
+}
+
+.logo img {
+  height: 40px;
+}
+
+/* ---------- Help Panel ---------- */
+.help-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--rojo-principal);
+  color: var(--dorado);
+  border: none;
+  font-size: 1.5rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(196, 30, 58, 0.5);
+  z-index: 150;
+  transition: all 0.3s;
+}
+
+.help-btn:hover {
+  background-color: var(--rojo-oscuro);
+  transform: scale(1.1);
+}
+
+.help-panel {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  background: linear-gradient(135deg, rgba(196, 30, 58, 0.95) 0%, rgba(139, 0, 0, 0.95) 100%);
+  padding: 15px;
+  border-radius: 10px;
+  width: 220px;
+  color: #fff;
+  display: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  border: 2px solid var(--dorado);
+}
+
+.help-panel.show {
+  display: block;
+}
+
+/* ---------- Video Section ---------- */
+.video-section {
+  margin: 60px auto;
+  max-width: 800px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(196, 30, 58, 0.4);
+  animation: fadeIn 1.2s ease;
+  border: 3px solid var(--dorado);
+}
+
+/* ---------- Grid Menu ---------- */
+.grid-menu{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:1.5rem;
+}
+
+.grid-menu .card h3{
+  font-size:1.4rem;
+  margin:.5rem 0;
+  color: var(--crema);
+}
+
+.grid-menu .card p{
+  font-size:1rem;
+  color: #f1f1f1;
+}
+
+/* ---------- Main Content ---------- */
+main {
+  max-width: 1200px;
+  margin: auto;
+  padding: 3rem 2rem;
+}
+
+h1 {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, rgba(196, 30, 58, 0.6) 0%, rgba(139, 0, 0, 0.6) 100%);
+  padding: .6rem 1rem;
+  border-radius: 12px;
+  border: 2px solid var(--dorado);
+  text-shadow: 2px 2px 6px rgba(0,0,0,.4);
+  color: var(--dorado);
+}
+
+h2 {
+  font-size: 2em;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--dorado);
+  padding-bottom: .4rem;
+  color: var(--dorado);
+}
+
+/* ---------- Mapa Section ---------- */
+.mapa-section {
+  margin-top: 50px;
+  background: linear-gradient(135deg, rgba(196, 30, 58, 0.8) 0%, rgba(139, 0, 0, 0.8) 100%);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+  animation: fadeIn 1s ease;
+  border: 2px solid var(--dorado);
+}
+
+.info-contacto i {
+  color: var(--dorado);
+  margin-right: 8px;
+}

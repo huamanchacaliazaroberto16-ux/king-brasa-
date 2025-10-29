@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="icon" href="imagenes/logo-kingbrasa.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>King Brasa Delivery</title>
+
+  <!-- Estilos globales y lógica -->
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+  <style>
+    body{
+      margin:0;
+      font-family:'Segoe UI',Tahoma,sans-serif;
+      background:url("imagenes/bg.png") center/cover fixed;
+      color:#fff;
+    }
+
+    /* ---------- Encabezado ---------- */
+    header{
+      background:rgba(255,102,0,.9);
+      padding:15px 30px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      position:sticky;top:0;z-index:100;
+      box-shadow:0 2px 10px rgba(0,0,0,.3);
+    }
+    header h2{margin:0}
+
+    .btn{
+      background:#fff3e0;color:#993e01;border:none;border-radius:6px;
+      padding:10px 20px;font-weight:bold;cursor:pointer;
+      display:flex;align-items:center;gap:8px;
+      transition:background .3s,transform .3s;
+    }
+    .btn:hover{background:#ff9800;color:#fff;transform:translateY(-2px)}
+
+    .nav-buttons{display:flex;gap:10px;flex-wrap:wrap}
+    
+    /* ---------- Carta ---------- */
+    main{max-width:1200px;margin:auto;padding:3rem 2rem}
+    h1{text-align:center;font-size:3rem;margin-bottom:1.5rem;
+        background:rgba(255,102,0,.6);padding:.6rem 1rem;border-radius:12px;
+        border:2px solid #ffae00;text-shadow:2px 2px 6px rgba(0,0,0,.4)}
+    h2{font-size:2em;margin-top:3rem;margin-bottom:1rem;
+        border-bottom:2px solid rgba(255,255,255,.2);padding-bottom:.4rem}
+
+    .grid-menu{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem
+    }
+    .card{
+      background:rgba(255,102,0,.85);border-radius:12px;padding:1rem;
+      box-shadow:0 4px 10px rgba(0,0,0,.4);backdrop-filter:blur(4px);
+      transition:transform .3s,box-shadow .3s;animation:fadeIn .6s ease
+    }
+    .card:hover{transform:translateY(-6px);box-shadow:0 6px 18px rgba(0,0,0,.5)}
+    .card img{width:100%;height:180px;object-fit:cover;border-radius:10px;margin-bottom:12px}
+    .card h3{font-size:1.4rem;margin:.5rem 0;color:#fff8f0}
+    .card p{font-size:1rem;color:#f1f1f1}
+    .price{margin-top:10px;font-weight:bold;color:#ffeaa7;font-size:1.1em}
+
+    @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  </style>
+</head>
+<body>
+
+  <!-- ===== Barra de navegación ===== -->
+ <header>
+  <h2>8 Cepas</h2>
+  <button class="hamburger" id="hamburgerBtn" aria-label="Menú">
+    <i class="fas fa-bars"></i>
+  </button>
+  <nav class="nav-buttons" id="navMenu">
+    <a href="menu principal.html"><i class="fas fa-home"></i> Inicio</a>
+    <a href="Cmenu.html"><i class="fas fa-utensils"></i> Carta</a>
+    
+    <a href="nosotros.html"><i class="fas fa-users"></i> Nosotros</a>
+    
+    <!-- Este espacio se usará para insertar el botón de Admin si corresponde -->
+    <span id="adminBtnContainer"></span>
+
+    <!-- Este espacio se usará para insertar el botón de login o logout -->
+    <span id="userBtns"></span>
+  </nav>
+</header>
+  <!-- ===== pedidos – solo autenticado ===== -->
+  
+
+  <!-- ===== Contacto (siempre visible) ===== -->
+  <section id="contacto" class="fade-in">
+    <h2>Contacto</h2>
+
+    <p style="text-align:center;line-height:1.6">
+      📍 <strong>Av. Los Álamos 123 – Miraflores, Lima</strong><br>
+      📞 <strong>+51 (01) 342‑9821</strong> · ✉ <strong>pedidos@8cepas.pe</strong>
+    </p>
+
+    <!-- Mapa incrustado de Google Maps -->
+    <div style="max-width:800px;margin:1.5rem auto">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.573171601224!2d-77.02876418520177!3d-12.07509494514057!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c90a095c5555%3A0x936c8d86f68e8d8!2s8%20Cepas!5e0!3m2!1ses-419!2spe!4v1700000000000!5m2!1ses-419!2spe"
+        width="100%" height="320" style="border:0;border-radius:12px" allowfullscreen=""
+        loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </section>
+
+  <!-- ===== Modal Login / Registro ===== -->
+  <div id="modalLogin" class="modal"
+       onclick="event.target===this && this.classList.remove('open')">
+    <div class="modal-content">
+      <h2>Ingresa a tu cuenta</h2>
+      <form onsubmit="event.preventDefault(); login(this.email.value,this.pass.value)">
+        <!-- placeholder sin mencionar admin -->
+        <input name="email" placeholder="Correo" required>
+        <input name="pass"  type="password" placeholder="Contraseña" required>
+        <button class="btn" style="width:100%">Acceder</button>
+      </form>
+
+      <hr style="margin:1.3rem 0">
+
+      <h3>Crear cuenta</h3>
+      <form onsubmit="event.preventDefault(); signUp(this.name.value,this.email2.value,this.pass2.value)">
+        <input name="name"   placeholder="Nombre" required>
+        <input name="email2" type="email" placeholder="Correo" required>
+        <input name="pass2"  type="password" placeholder="Contraseña" required>
+        <button class="btn outline" style="width:100%">Registrarme</button>
+      </form>
+    </div>
+  </div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const user = JSON.parse(localStorage.getItem('cepasSession') || 'null');
+
+    const adminContainer = document.getElementById('adminBtnContainer');
+    const userBtnsContainer = document.getElementById('userBtns');
+
+    // Si el usuario es admin, muestra el botón Admin
+    if (user?.admin && adminContainer) {
+      const adminBtn = document.createElement('a');
+      adminBtn.href = 'admin.html';
+      adminBtn.innerHTML = `<i class="fas fa-user-shield"></i> Admin`;
+      adminContainer.appendChild(adminBtn);
+    }
+
+    // Si el usuario ha iniciado sesión, muestra "Cerrar sesión"
+    if (user && userBtnsContainer) {
+      const logoutBtn = document.createElement('button');
+      logoutBtn.className = 'btn outline';
+      logoutBtn.innerHTML = `<i class="fas fa-sign-out-alt"></i> Cerrar sesión`;
+      logoutBtn.onclick = logout;
+      userBtnsContainer.appendChild(logoutBtn);
+    }
+
+    // Si el usuario NO ha iniciado sesión, muestra "Ingresar / Registrarse"
+    if (!user && userBtnsContainer) {
+      const loginBtn = document.createElement('button');
+      loginBtn.className = 'btn outline';
+      loginBtn.innerHTML = `<i class="fas fa-user"></i> Ingresar / Registrarse`;
+      loginBtn.onclick = () => {
+        document.getElementById('modalLogin')?.classList.add('open');
+      };
+      userBtnsContainer.appendChild(loginBtn);
+    }
+  });
+
+  function logout() {
+    localStorage.removeItem('cepasSession');
+    location.reload();
+  }
+</script>
+
+</body>
+</html>

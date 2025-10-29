@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="icon" href="imagenes/logo-kingbrasa.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>King Brasa Delivery - Tu Pedido</title>
+  <script defer src="script.js"></script>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.6s ease-out forwards;
+    }
+    .delivery-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+    .transition-all {
+      transition: all 0.3s ease;
+    }
+    
+    .flex-carrito {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    .product {
+      background: rgba(255, 102, 0, 0.85);
+      border-radius: 12px;
+      padding: 1rem;
+      width: 250px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: transform 0.3s;
+      color: white;
+    }
+
+    .product:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+    }
+
+    .product img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 12px;
+    }
+
+    .product h3 {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .product p {
+      font-size: 1rem;
+      color: #f1f1f1;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: 2px solid #ff6f00;
+      outline-offset: 2px;
+    }
+
+    .modal { 
+      display: none; 
+      position: fixed; 
+      inset: 0; 
+      background: rgba(0,0,0,0.6); 
+      justify-content: center; 
+      align-items: center; 
+      z-index: 50; 
+    }
+    .modal.open { display: flex; }
+    .modal-content { 
+      background: white; 
+      padding: 2rem; 
+      border-radius: 0.5rem; 
+      max-width: 400px; 
+      width: 100%; 
+    }
+
+    .total-section {
+      background: rgba(255, 102, 0, 0.9);
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin: 2rem auto;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .total-section h3 {
+      font-size: 2rem;
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+
+    .carrito-vacio {
+      text-align: center;
+      padding: 3rem;
+      background: rgba(255, 102, 0, 0.2);
+      border-radius: 12px;
+      color: white;
+      font-size: 1.2rem;
+      margin: 2rem auto;
+      max-width: 600px;
+    }
+
+    .btn-quitar {
+      background: #dc2626;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-top: 0.5rem;
+      width: 100%;
+    }
+
+    .btn-quitar:hover {
+      background: #b91c1c;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 font-sans" style="background-image: url('imagenes/bg.png'); background-size: cover; background-attachment: fixed;">
+  
+  <!-- Encabezado -->
+  <header>
+    <h2>King Brasa</h2>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Menú">
+      <i class="fas fa-bars"></i>
+    </button>
+    <nav class="nav-buttons" id="navMenu">
+      <a href="menu principal.html"><i class="fas fa-home"></i> Inicio</a>
+      <a href="Cmenu.html"><i class="fas fa-utensils"></i> Carta</a>
+      <a href="nosotros.html"><i class="fas fa-users"></i> Nosotros</a>
+      <span id="adminBtnContainer"></span>
+      <span id="userBtns"></span>
+    </nav>
+  </header>
+
+  <!-- Banner Hero -->
+  <div class="relative" style="margin-bottom: 2rem;">
+    <div class="absolute bg-black opacity-30"></div>
+    <img src="https://images.unsplash.com/photo-1526367790999-0150786686a2?w=1200" alt="Delivery King Brasa" class="w-full h-64 object-cover">
+    <div class="absolute inset-0 flex items-center justify-center text-center">
+      <div class="text-white animate-fade-in">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">🛒 Tu Pedido King Brasa</h1>
+        <p class="text-xl">Delivery rápido y confiable en menos de 45 minutos</p>
+      </div>
+    </div>
+  </div>
+
+  <main class="container mx-auto px-4 pb-8">
+    
+    <!-- Sección de platos seleccionados -->
+    <section class="mb-8">
+      <h2 class="text-3xl font-bold text-center mb-6" style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">
+        Platos Seleccionados
+      </h2>
+      <div id="carritoSeleccionado" class="flex-carrito"></div>
+      <div id="totalSection" class="total-section" style="display: none;">
+        <h3>Total a Pagar</h3>
+        <p id="totalMonto" style="font-size: 2.5rem; color: #fff3e0; font-weight: bold;">S/ 0.00</p>
+      </div>
+    </section>
+
+    <!-- Formulario de Delivery -->
+    <section id="order-form" class="animate-fade-in" style="margin-bottom: 3rem;">
+      <div class="bg-gray-800 text-white p-6 rounded-lg shadow-md max-w-xl mx-auto">
+        <h2 class="text-2xl font-bold text-white mb-6 text-center">
+          📍 Datos de Entrega
+        </h2>
+        
+        <form id="deliveryForm" class="space-y-4">
+          <div>
+            <label for="name" class="block text-sm font-medium mb-2">Nombre Completo:</label>
+            <input type="text" id="name" required 
+              class="w-full p-3 rounded border border-gray-600 bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500" 
+              placeholder="Ingresa tu nombre completo" />
+          </div>
+
+          <div>
+            <label for="phone" class="block text-sm font-medium mb-2">Teléfono:</label>
+            <input type="tel" id="phone" required 
+              class="w-full p-3 rounded border border-gray-600 bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500" 
+              placeholder="Ejemplo: 956 789 123" />
+          </div>
+
+          <div>
+            <label for="address" class="block text-sm font-medium mb-2">Dirección de Entrega:</label>
+            <input type="text" id="address" required 
+              class="w-full p-3 rounded border border-gray-600 bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500" 
+              placeholder="Calle, número, referencia" />
+          </div>
+
+          <div>
+            <label for="city" class="block text-sm font-medium mb-2">Ciudad:</label>
+            <select id="city" required 
+              class="w-full p-3 rounded border border-gray-600 bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-orange-500">
+              <option value="">Seleccionar ciudad...</option>
+              <option value="ica">Ica</option>
+              <option value="lima">Lima</option>
+              <option value="arequipa">Arequipa</option>
+              <option value="trujillo">Trujillo</option>
+              <option value="cusco">Cusco</option>
+              <option value="otro">Otra</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="district" class="block text-sm font-medium mb-2">Distrito:</label>
+            <input type="text" id="district" required 
+              class="w-full p-3 rounded border border-gray-600 bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500" 
+              placeholder="Distrito o zona" />
+          </div>
+
+          <div>
+            <label for="payment" class="block text-sm font-medium mb-2">Método de Pago:</label>
+            <select id="payment" required
+              class="w-full p-3 rounded border border-gray-600 bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-orange-500">
+              <option value="efectivo">💵 Efectivo</option>
+              <option value="yape">📱 Yape / Plin</option>
+              <option value="tarjeta">💳 Tarjeta</option>
+              <option value="transferencia">🏦 Transferencia Bancaria</option>
+            </select>
+          </div>
+
+          <button type="submit" 
+            class="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-4 rounded transition-all text-lg">
+            ✅ Confirmar Pedido
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Cómo funciona -->
+    <section class="bg-orange-50 rounded-xl p-8 mb-8 animate-fade-in">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl font-bold text-center mb-6 text-orange-800">
+          ¿Cómo funciona nuestro delivery?
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="text-center p-4">
+            <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-sm">
+              <i class="fas fa-shopping-cart text-3xl text-orange-600"></i>
+            </div>
+            <h3 class="font-bold text-lg mb-2 text-gray-800">1. Selecciona</h3>
+            <p class="text-gray-600">Elige tus platos favoritos del menú</p>
+          </div>
+          <div class="text-center p-4">
+            <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-sm">
+              <i class="fas fa-clipboard-check text-3xl text-orange-600"></i>
+            </div>
+            <h3 class="font-bold text-lg mb-2 text-gray-800">2. Confirma</h3>
+            <p class="text-gray-600">Completa tus datos y método de pago</p>
+          </div>
+          <div class="text-center p-4">
+            <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-sm">
+              <i class="fas fa-motorcycle text-3xl text-orange-600"></i>
+            </div>
+            <h3 class="font-bold text-lg mb-2 text-gray-800">3. Recibe</h3>
+            <p class="text-gray-600">Entrega en menos de 45 minutos</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Scripts -->
+  <script>
+    // Mostrar platos del carrito
+    function mostrarCarrito() {
+      const container = document.getElementById("carritoSeleccionado");
+      const totalSection = document.getElementById("totalSection");
+      const totalMonto = document.getElementById("totalMonto");
+      
+      if (!container) return;
+
+      const carrito = JSON.parse(localStorage.getItem("carritoCepas") || "[]");
+
+      if (carrito.length === 0) {
+        container.innerHTML = `
+          <div class="carrito-vacio">
+            <i class="fas fa-shopping-cart" style="font-size: 4rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+            <p style="font-size: 1.3rem; margin-bottom: 1rem;">Tu carrito está vacío</p>
+            <p style="margin-bottom: 1.5rem;">¡Agrega deliciosos platos de King Brasa!</p>
+            <a href="Cmenu.html" class="btn" style="display: inline-block; text-decoration: none; background: #ff6f00; color: white; padding: 1rem 2rem; border-radius: 8px; font-weight: bold;">
+              <i class="fas fa-utensils"></i> Ver Menú
+            </a>
+          </div>
+        `;
+        totalSection.style.display = "none";
+        return;
+      }
+
+      let total = 0;
+      container.innerHTML = carrito.map((plato, index) => {
+        const precio = parseFloat(plato.precio) || 0;
+        total += precio;
+        
+        return `
+          <div class="product">
+            <img src="${plato.img || 'imagenes/placeholder.jpg'}" alt="${plato.nombre}">
+            <h3>${plato.nombre}</h3>
+            <p style="font-size: 0.9rem; margin: 0.5rem 0;">${plato.descripcion || ''}</p>
+            <p style="font-size: 1.5rem; font-weight: bold; color: #fff3e0; margin: 0.5rem 0;">
+              S/ ${precio.toFixed(2)}
+            </p>
+            <button class="btn-quitar" onclick="quitarDelCarrito(${index})">
+              <i class="fas fa-trash"></i> Quitar del pedido
+            </button>
+          </div>
+        `;
+      }).join("");
+
+      // Mostrar total
+      totalSection.style.display = "block";
+      totalMonto.textContent = `S/ ${total.toFixed(2)}`;
+    }
+
+    // Quitar plato del carrito
+    function quitarDelCarrito(index) {
+      let carrito = JSON.parse(localStorage.getItem("carritoCepas") || "[]");
+      const platoEliminado = carrito[index];
+      carrito.splice(index, 1);
+      localStorage.setItem("carritoCepas", JSON.stringify(carrito));
+      mostrarCarrito();
+      
+      // Notificación
+      alert(`❌ "${platoEliminado.nombre}" eliminado del carrito`);
+    }
+
+    // Envío del formulario
+    document.getElementById('deliveryForm')?.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const carrito = JSON.parse(localStorage.getItem('carritoCepas') || '[]');
+      
+      if (carrito.length === 0) {
+        alert('⚠️ Tu carrito está vacío. Agrega platos antes de confirmar.');
+        return;
+      }
+
+      const name = document.getElementById('name').value;
+      const phone = document.getElementById('phone').value;
+      const address = document.getElementById('address').value;
+      const city = document.getElementById('city').value;
+      const district = document.getElementById('district').value;
+      const payment = document.getElementById('payment').value;
+
+      // Calcular total
+      const total = carrito.reduce((sum, item) => sum + parseFloat(item.precio || 0), 0);
+
+      // Crear pedido
+      const nuevoPedido = {
+        nombre: name,
+        telefono: phone,
+        direccion: `${address}, ${district}, ${city}`,
+        metodoPago: payment,
+        platos: carrito,
+        total: total,
+        fecha: new Date().toLocaleString('es-PE', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        })
+      };
+
+      // Guardar pedido
+      const pedidos = JSON.parse(localStorage.getItem('pedidosCepas') || '[]');
+      pedidos.push(nuevoPedido);
+      localStorage.setItem('pedidosCepas', JSON.stringify(pedidos));
+
+      // Limpiar carrito
+      localStorage.removeItem('carritoCepas');
+
+      // Mensaje de éxito
+      alert(`✅ ¡Pedido confirmado exitosamente!\n\n` +
+            `Total: S/ ${total.toFixed(2)}\n` +
+            `Método de pago: ${payment}\n\n` +
+            `Gracias por tu preferencia, ${name}.\n` +
+            `Tu pedido llegará en 30-45 minutos. 🍗🔥`);
+
+      // Redireccionar
+      window.location.href = 'menu principal.html';
+    });
+
+    // Cambiar distrito dinámicamente para Ica
+    document.getElementById('city')?.addEventListener('change', function() {
+      const value = this.value;
+      const districtInput = document.getElementById('district');
+      
+      if (value === 'ica') {
+        const select = document.createElement('select');
+        select.id = 'district';
+        select.required = true;
+        select.className = districtInput.className;
+        select.innerHTML = `
+          <option value="">Seleccionar distrito...</option>
+          <option value="ica">Ica</option>
+          <option value="la-tinguina">La Tinguiña</option>
+          <option value="parcona">Parcona</option>
+          <option value="pueblo-nuevo">Pueblo Nuevo</option>
+          <option value="salas">Salas</option>
+          <option value="san-jose-de-los-molinos">San José de los Molinos</option>
+          <option value="san-juan-bautista">San Juan Bautista</option>
+          <option value="santiago">Santiago</option>
+          <option value="subtanjalla">Subtanjalla</option>
+          <option value="tate">Tate</option>
+          <option value="yauca-del-rosario">Yauca del Rosario</option>
+        `;
+        districtInput.replaceWith(select);
+      } else if (districtInput.tagName === 'SELECT') {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.id = 'district';
+        input.required = true;
+        input.className = districtInput.className;
+        input.placeholder = 'Distrito o zona';
+        districtInput.replaceWith(input);
+      }
+    });
+
+    // Cargar carrito al iniciar
+    document.addEventListener('DOMContentLoaded', mostrarCarrito);
+  </script>
+
+  <script>
+    // Autenticación
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = JSON.parse(localStorage.getItem('cepasSession') || 'null');
+      const adminContainer = document.getElementById('adminBtnContainer');
+      const userBtnsContainer = document.getElementById('userBtns');
+
+      if (user?.admin && adminContainer) {
+        const adminBtn = document.createElement('a');
+        adminBtn.href = 'admin.html';
+        adminBtn.innerHTML = `<i class="fas fa-user-shield"></i> Admin`;
+        adminContainer.appendChild(adminBtn);
+      }
+
+      if (user && userBtnsContainer) {
+        const logoutBtn = document.createElement('button');
+        logoutBtn.className = 'btn outline';
+        logoutBtn.innerHTML = `<i class="fas fa-sign-out-alt"></i> Cerrar sesión`;
+        logoutBtn.onclick = logout;
+        userBtnsContainer.appendChild(logoutBtn);
+      }
+
+      if (!user && userBtnsContainer) {
+        const loginBtn = document.createElement('button');
+        loginBtn.className = 'btn outline';
+        loginBtn.innerHTML = `<i class="fas fa-user"></i> Ingresar / Registrarse`;
+        loginBtn.onclick = () => {
+          document.getElementById('modalLogin')?.classList.add('open');
+        };
+        userBtnsContainer.appendChild(loginBtn);
+      }
+    });
+
+    function logout() {
+      localStorage.removeItem('cepasSession');
+      location.reload();
+    }
+  </script>
+</body>
+</html>
